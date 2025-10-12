@@ -1,0 +1,79 @@
+---
+export interface Props {
+  title: string;
+  slug: string;
+  character: string;
+  species: string;
+  affiliation: string;
+  era: string;
+  tags: string[];
+  portrait: string;
+  summary: string;
+  compact?: boolean;
+}
+
+const { title, slug, character, species, affiliation, era, tags, portrait, summary, compact = false } = Astro.props;
+---
+
+<article class={compact ? "story-card-compact" : "story-card-grid"}>
+  <a href={`/stories/${slug}`} class="block group">
+    {!compact && (
+      <div class="aspect-[3/4] overflow-hidden bg-ic-line rounded-t">
+        <img
+          src={portrait}
+          alt={`Portrait of ${character}`}
+          class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          loading="lazy"
+        />
+      </div>
+    )}
+
+    <div class={`p-4 ${!compact && 'bg-ic-panel rounded-b'}`}>
+      {/* Title and Character */}
+      <h3 class="text-lg font-label uppercase tracking-wide text-white group-hover:text-ic-alert transition-colors">
+        {title}
+      </h3>
+      <p class="text-sm text-ic-mute mt-1">{character}</p>
+
+      {/* Metadata */}
+      <div class="flex flex-wrap gap-2 mt-3 text-xs font-mono">
+        <span class="bg-ic-line px-2 py-1 rounded">{species}</span>
+        <span class="bg-ic-line px-2 py-1 rounded">{affiliation}</span>
+        <span class="bg-ic-line px-2 py-1 rounded">{era}</span>
+      </div>
+
+      {/* Tags */}
+      {tags.length > 0 && (
+        <div class="flex flex-wrap gap-1 mt-2">
+          {tags.map(tag => (
+            <span class="text-xs text-ic-mute">#{tag}</span>
+          ))}
+        </div>
+      )}
+
+      {/* Summary */}
+      {!compact && (
+        <p class="text-sm text-ic-mute mt-3 line-clamp-3">
+          {summary}
+        </p>
+      )}
+    </div>
+  </a>
+</article>
+
+<style>
+  .story-card-grid {
+    @apply bg-ic-panel rounded overflow-hidden border border-ic-line hover:border-ic-alert transition-colors;
+  }
+
+  .story-card-compact {
+    @apply border-b border-ic-line py-4 hover:bg-ic-panel transition-colors;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

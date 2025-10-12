@@ -47,8 +47,8 @@
 - [x] Create `scripts/optimize-images.sh` script
   **Completed:** 2025-10-12
 
-- [ ] Test image optimization with sample portrait
-  **Completed:** ___________
+- [x] Test image optimization with sample portrait
+  **Completed:** 2025-10-12
 
 - [ ] Document image requirements in README
   **Completed:** ___________
@@ -112,11 +112,11 @@
   **Completed:** ___________
 
 ### Story Components
-- [ ] Create StoryCard.astro component
-  **Completed:** ___________
+- [x] Create StoryCard.astro component
+  **Completed:** 2025-10-12
 
-- [ ] Create StoryMeta.astro component
-  **Completed:** ___________
+- [x] Create StoryMeta.astro component
+  **Completed:** 2025-10-12
 
 - [ ] Test StoryCard with sample data
   **Completed:** ___________
