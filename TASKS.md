@@ -44,8 +44,8 @@
   **Completed:** ___________
 
 ### Image Optimization Pipeline
-- [ ] Create `scripts/optimize-images.sh` script
-  **Completed:** ___________
+- [x] Create `scripts/optimize-images.sh` script
+  **Completed:** 2025-10-12
 
 - [ ] Test image optimization with sample portrait
   **Completed:** ___________
@@ -77,24 +77,24 @@
 ## Milestone 2: Content Collections and Schema
 
 ### Content Collection Setup
-- [ ] Create `/src/content/stories/` directory
-  **Completed:** ___________
+- [x] Create `/src/content/stories/` directory
+  **Completed:** 2025-10-12
 
-- [ ] Define Zod schema for story frontmatter
-  **Completed:** ___________
+- [x] Define Zod schema for story frontmatter
+  **Completed:** 2025-10-12
 
-- [ ] Register stories collection in Astro config
-  **Completed:** ___________
+- [x] Register stories collection in Astro config
+  **Completed:** 2025-10-12
 
-- [ ] Add TypeScript types for story collection
-  **Completed:** ___________
+- [x] Add TypeScript types for story collection
+  **Completed:** 2025-10-12
 
 - [ ] Test schema validation with invalid data
   **Completed:** ___________
 
 ### Sample Story Creation
-- [ ] Create `/public/images/stories/` directory
-  **Completed:** ___________
+- [x] Create `/public/images/stories/` directory
+  **Completed:** 2025-10-12
 
 - [ ] Convert Bilar "Bill" Saruun PDF to MDX
   **Completed:** ___________
