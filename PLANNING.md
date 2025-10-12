@@ -18,7 +18,7 @@ Build a static Star Wars fan story archive with an Imperial aesthetic that makes
 ### Core Components
 
 **Content Layer** (`/src/content/stories/*.mdx`)
-- Boundary: MDX files with Zod-validated frontmatter containing story metadata (title, character, species, affiliation, era, tags, ship, portrait, summary)
+- Boundary: MDX files with Zod-validated frontmatter containing story metadata (title, character, portrait, summary)
 - Responsibility: Single source of truth for all story content and metadata
 - No business logic; purely data files consumed by Astro content collections
 
@@ -29,7 +29,7 @@ Build a static Star Wars fan story archive with an Imperial aesthetic that makes
 
 **Component Library** (`/src/components/`)
 - `StoryCard.astro`: Reusable card component for story list display (grid/compact modes)
-- `StoryMeta.astro`: Metadata row component (species, tags, ship) for story pages
+- ~~`StoryMeta.astro`: Metadata row component (species, tags, ship) for story pages~~ (removed)
 - `TOCClient.ts`: Client-side table of contents generator from h2/h3 headings with "copy section link" functionality
 - `SearchClient.ts`: Fuse.js wrapper with debounced input handling and result filtering
 - Boundary: Self-contained UI components; no cross-component state sharing
@@ -44,7 +44,7 @@ Build a static Star Wars fan story archive with an Imperial aesthetic that makes
 
 **Search System** (client-side only)
 - Build-time: Generate JSON search index from all story frontmatter
-- Runtime: Load Fuse.js, hydrate search index, filter on `title`, `character`, `tags`, `summary`
+- Runtime: Load Fuse.js, hydrate search index, filter on `title`, `character`, `summary`
 - Boundary: < 60 KB gzipped JavaScript total; no server queries
 
 ### Component Interaction Flow
@@ -143,8 +143,8 @@ User Request → Astro SSG Build → Static HTML/CSS/JS → Browser
 ### Open Questions
 
 **Q1: Character index implementation strategy**
-- **Question**: Should `/characters` be a single page or paginated? How should we group characters (alphabetically, by species, by affiliation)?
-- **Next Steps**: Start with single-page alphabetical list. Implement pagination if character count exceeds ~50. Add filtering by species/affiliation as secondary feature.
+- **Question**: Should `/characters` be a single page or paginated? How should we group characters (alphabetically)?
+- **Next Steps**: Start with single-page alphabetical list. Implement pagination if character count exceeds ~50.
 - **Blocker**: None, can iterate post-v1.
 
 **Q2: PDF migration workflow automation**
@@ -228,7 +228,7 @@ User Request → Astro SSG Build → Static HTML/CSS/JS → Browser
 4. **Build story list and search** (Milestone 3, PRD.md:183-186)
    - Implement `/stories/index.astro` with StoryCard grid
    - Integrate Fuse.js search with JSON index generation
-   - Add filter chips for era, species, tags
+   - Add search/filter once new metadata defined
    - Test search performance with 20+ sample stories
 
 5. **Create story detail page** (Milestone 4, PRD.md:187-189)

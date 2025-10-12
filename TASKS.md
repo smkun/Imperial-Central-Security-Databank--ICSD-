@@ -176,7 +176,7 @@
 - [ ] Add era filter chips
   **Completed:** ___________
 
-- [ ] Add species filter chips
+- [ ] Add story list search enhancements
   **Completed:** ___________
 
 - [ ] Add tag filter chips
@@ -205,8 +205,8 @@
 - [ ] Render story content with MDX
   **Completed:** ___________
 
-- [ ] Add story metadata display with StoryMeta
-  **Completed:** ___________
+- [x] Remove StoryMeta metadata panel from story layout
+  **Completed:** 2025-10-12
 
 - [ ] Style story content with readable typography
   **Completed:** ___________
@@ -214,7 +214,13 @@
 - [ ] Set content width to ~65 characters
   **Completed:** ___________
 
-- [ ] Add portrait image to story header
+- [x] Add portrait image to story header
+  **Completed:** 2025-10-12
+
+- [ ] QA dossier header layout across breakpoints
+  **Completed:** ___________
+
+- [ ] Add automated visual regression snapshot for story header
   **Completed:** ___________
 
 ### Table of Contents
@@ -324,13 +330,13 @@
 - [ ] Sort characters alphabetically
   **Completed:** ___________
 
-- [ ] Add species and affiliation to character list
+- [ ] Add richer metadata to character list
   **Completed:** ___________
 
 - [ ] Link characters to their stories
   **Completed:** ___________
 
-- [ ] Add filter by species/affiliation
+- [ ] Add filtering once new metadata defined
   **Completed:** ___________
 
 ### Print Styles
@@ -581,7 +587,7 @@ Based on the current project state (11 tasks complete from Milestone 1), here ar
    Set up content collections directory structure for MDX story files
 
 2. **Define Zod schema for story frontmatter**
-   Create schema matching PRD spec with fields: title, slug, character, species, affiliation, era, tags, ship, portrait, summary
+   Create schema matching PRD spec with fields: title, character, portrait, summary
 
 3. **Register stories collection in Astro config**
    Configure content collections in astro.config.mjs with Zod schema

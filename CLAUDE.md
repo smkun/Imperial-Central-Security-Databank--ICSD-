@@ -303,7 +303,7 @@ If a task requires changes that could break existing functionality:
 **Tasks completed:** 5 (Milestone 2)
 **Key accomplishments:**
 - ✅ Created `/src/content/stories/` directory structure for MDX files
-- ✅ Defined Zod schema with all PRD frontmatter fields (title, slug, character, species, affiliation, era, tags, ship, lastUpdated, portrait, summary, homeworld, authorNotes, linkedStories)
+- ✅ Defined streamlined Zod schema for story frontmatter (title, character, lastUpdated, portrait, summary, optional homeworld/authorNotes/linkedStories)
 - ✅ Registered stories collection in `src/content/config.ts` with type-safe validation
 - ✅ Created `/public/images/stories/` directory for optimized portraits
 - ✅ Built `scripts/optimize-images.sh` for automated WebP conversion (600×800, 85% quality)
@@ -377,6 +377,28 @@ npm run format
 ```
 
 ### File Paths Quick Reference
+
+---
+
+### 2025-10-12 — Story Layout Simplification (Session 5)
+**Changes**
+- Removed story metadata fields (species, affiliation, era, tags, ship) from content schema, MDX frontmatter, StoryCard props, index page bindings, and conversion script to eliminate duplicate card text.
+- Deleted the obsolete StoryMeta component and refreshed planning/docs to reflect the streamlined data model.
+- Reworked `StoryLayout.astro` so the portrait renders in its own column beside the centered title/summary boxes, added the transition band accent, and tightened header spacing.
+- Updated TASKS.md to mark the metadata removal and portrait header work as complete.
+
+**New tasks**
+- QA dossier header layout across breakpoints.
+- Add automated visual regression snapshot for story header.
+
+**Risks / unknowns**
+- Layout relies on manual CSS tuning; needs cross-device verification to ensure the portrait and summary stay aligned.
+- Removing metadata fields may break any tooling or features still expecting them (e.g., future search/filter work).
+
+**Next three tasks**
+1. QA dossier header layout across breakpoints.
+2. Add automated visual regression snapshot for the story header.
+3. Resume search/index backlog (generate JSON index, hook up search UI).
 
 - **Planning docs**: `PLANNING.md`, `TASKS.md`, `PRD.md`, `CLAUDE.md`
 - **Source data**: `SOURCE FILES/` - Contains original .docx stories and .png portraits

@@ -1,16 +1,37 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StoryCard from '../components/StoryCard.astro';
+import { getCollection } from 'astro:content';
 
+const stories = (await getCollection('stories'))
+  .filter(story => story.slug !== 'kestrel') // Hide Kestrel - easter egg only
+  .sort((a, b) => b.data.lastUpdated.getTime() - a.data.lastUpdated.getTime());
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Imperial Central Security Databank">
+  <div class="max-w-7xl mx-auto px-4 py-16 space-y-16">
+    <header class="relative overflow-hidden border border-ic-line/50 bg-black/70 px-8 py-10 shadow-[0_0_30px_rgba(0,0,0,0.6)]">
+      <div class="absolute inset-0 pointer-events-none opacity-30 bg-[linear-gradient(120deg,transparent_0%,rgba(217,58,58,0.25)_40%,transparent_85%)]"></div>
+      <div class="absolute inset-0 border border-white/5 mix-blend-overlay"></div>
+      <div class="relative space-y-5 max-w-3xl">
+        <p class="text-lg text-ic-mute leading-relaxed">
+          Imperial Central Security filings on Rebel agents, rogue pilots, and other high-risk insurgents.
+        </p>
+        <p class="text-base md:text-lg font-label uppercase tracking-[0.4em] text-ic-alert">
+          Access Level Kestrel
+        </p>
+      </div>
+    </header>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      {stories.map(story => (
+        <StoryCard
+          title={story.data.title}
+          slug={story.slug}
+          character={story.data.character}
+          portrait={story.data.portrait}
+        />
+      ))}
+    </section>
+  </div>
+</BaseLayout>

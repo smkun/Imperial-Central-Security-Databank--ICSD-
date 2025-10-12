@@ -3,73 +3,43 @@ export interface Props {
   title: string;
   slug: string;
   character: string;
-  species: string;
-  affiliation: string;
-  era: string;
-  tags: string[];
   portrait: string;
-  summary: string;
   compact?: boolean;
 }
 
-const { title, slug, character, species, affiliation, era, tags, portrait, summary, compact = false } = Astro.props;
+const { title, slug, character, portrait, compact = false } = Astro.props;
+
+const cardClass = compact
+  ? 'border-b border-white/10 py-4 hover:bg-black/60 transition-colors'
+  : 'group/card relative overflow-hidden rounded border border-white/10 bg-black/60 shadow-[0_0_25px_rgba(0,0,0,0.45)] transition-all duration-300 hover:-translate-y-1 hover:border-ic-alert/70 hover:shadow-[0_0_35px_rgba(217,58,58,0.3)]';
+
+const base = import.meta.env.BASE_URL;
 ---
 
-<article class={compact ? "story-card-compact" : "story-card-grid"}>
-  <a href={`/stories/${slug}`} class="block group">
+<article class={cardClass}>
+  <a href={`${base}/stories/${slug}`} class="block group">
     {!compact && (
-      <div class="aspect-[3/4] overflow-hidden bg-ic-line rounded-t">
+      <div class="relative aspect-[3/4] overflow-hidden bg-black/60">
+        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,rgba(217,58,58,0.6),transparent_60%)]"></div>
         <img
-          src={portrait}
+          src={`${base}${portrait}`}
           alt={`Portrait of ${character}`}
-          class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          class="relative z-[1] h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-110"
           loading="lazy"
         />
+        <span class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black via-black/40 to-transparent"></span>
       </div>
     )}
 
-    <div class={`p-4 ${!compact && 'bg-ic-panel rounded-b'}`}>
-      {/* Title and Character */}
-      <h3 class="text-lg font-label uppercase tracking-wide text-white group-hover:text-ic-alert transition-colors">
+    <div class={`p-5 ${!compact && 'bg-black/70'}`}>
+      <h3 class="text-lg font-label uppercase tracking-[0.45em] text-white group-hover/card:text-ic-alert transition-colors">
         {title}
       </h3>
-      <p class="text-sm text-ic-mute mt-1">{character}</p>
-
-      {/* Metadata */}
-      <div class="flex flex-wrap gap-2 mt-3 text-xs font-mono">
-        <span class="bg-ic-line px-2 py-1 rounded">{species}</span>
-        <span class="bg-ic-line px-2 py-1 rounded">{affiliation}</span>
-        <span class="bg-ic-line px-2 py-1 rounded">{era}</span>
-      </div>
-
-      {/* Tags */}
-      {tags.length > 0 && (
-        <div class="flex flex-wrap gap-1 mt-2">
-          {tags.map(tag => (
-            <span class="text-xs text-ic-mute">#{tag}</span>
-          ))}
-        </div>
-      )}
-
-      {/* Summary */}
-      {!compact && (
-        <p class="text-sm text-ic-mute mt-3 line-clamp-3">
-          {summary}
-        </p>
-      )}
     </div>
   </a>
 </article>
 
 <style>
-  .story-card-grid {
-    @apply bg-ic-panel rounded overflow-hidden border border-ic-line hover:border-ic-alert transition-colors;
-  }
-
-  .story-card-compact {
-    @apply border-b border-ic-line py-4 hover:bg-ic-panel transition-colors;
-  }
-
   .line-clamp-3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;

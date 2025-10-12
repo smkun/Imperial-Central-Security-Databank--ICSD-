@@ -1,0 +1,495 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  story: CollectionEntry<'stories'>;
+}
+
+const { story } = Astro.props;
+const { data } = story;
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title={data.title} description={data.summary} ogImage={data.portrait}>
+  <div class="dossier-wrapper">
+    <!-- Portrait column: portrait + threat indicator stacked vertically -->
+    <div class="portrait-column">
+      <!-- IMAGE: Portrait outside the black panel -->
+      <div class="portrait-shell">
+        <!-- Red glow background -->
+        <span class="portrait-glow"></span>
+
+        <!-- Corner brackets -->
+        <span class="corner-bracket corner-tl"></span>
+        <span class="corner-bracket corner-tr"></span>
+        <span class="corner-bracket corner-bl"></span>
+        <span class="corner-bracket corner-br"></span>
+
+        <!-- Scan line effect -->
+        <span class="scan-line"></span>
+
+        <!-- Portrait image -->
+        <img
+          src={`${base}${data.portrait}`}
+          alt={`Portrait of ${data.character}`}
+          class="portrait-image"
+          loading="lazy"
+        />
+
+        <!-- Bottom fade -->
+        <span class="portrait-fade"></span>
+      </div>
+
+      <!-- Threat Level Indicator (only if threatLevel exists) -->
+      {data.threatLevel && (
+        <div class={`threat-indicator threat-${data.threatLevel.toLowerCase().replace(/\s+/g, '-')}`}>
+          <span class="threat-label">THREAT ASSESSMENT</span>
+          <span class="threat-level">{data.threatLevel}</span>
+        </div>
+      )}
+    </div>
+
+    <!-- Black panel containing all text content -->
+    <article class="dossier-article">
+      <!-- Databank Reference Number -->
+      <div class="reference-id">
+        <span class="ref-label">ICSD REF:</span>
+        <span class="ref-code">{data.character.toUpperCase().replace(/[^A-Z0-9]/g, '-')}-{Math.abs(data.character.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0) % 10000).toString().padStart(4, '0')}</span>
+      </div>
+
+      <!-- HEADER: Title + Summary together, centered -->
+      <header class="dossier-header">
+        <div class="title-box">
+          <h1 class="text-4xl font-label uppercase tracking-[0.35em] text-white">
+            {data.title}
+          </h1>
+        </div>
+        <div class="summary-box">
+          <p class="text-base text-ic-mute/90 leading-relaxed">
+            {data.summary}
+          </p>
+        </div>
+      </header>
+
+      <!-- TRANSITION: Red laser accent band -->
+      <div class="transition-band" aria-hidden="true">
+        <span class="glow"></span>
+        <span class="line"></span>
+      </div>
+
+      <!-- TEXT 2: Story content -->
+      <div class="story-content">
+        <slot />
+      </div>
+    </article>
+  </div>
+</BaseLayout>
+
+<style lang="css">
+  /* Wrapper: Contains portrait column + black panel side-by-side */
+  .dossier-wrapper {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 2.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  /* Portrait column: Contains portrait and threat indicator stacked vertically */
+  .portrait-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  /* Portrait: Outside the black panel, to the left on desktop */
+  .portrait-shell {
+    position: relative;
+    width: min(280px, 70vw);
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border: 2px solid rgba(217, 58, 58, 0.4);
+    background: rgba(0, 0, 0, 0.8);
+    box-shadow:
+      0 0 30px rgba(217, 58, 58, 0.3),
+      0 0 60px rgba(217, 58, 58, 0.15),
+      inset 0 0 40px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Portrait image */
+  .portrait-image {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Red glow background */
+  .portrait-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top, rgba(217, 58, 58, 0.25), transparent 65%);
+    opacity: 0.6;
+    z-index: 0;
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  /* Corner brackets */
+  .corner-bracket {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(217, 58, 58, 0.8);
+    z-index: 2;
+  }
+
+  .corner-tl {
+    top: -1px;
+    left: -1px;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .corner-tr {
+    top: -1px;
+    right: -1px;
+    border-left: none;
+    border-bottom: none;
+  }
+
+  .corner-bl {
+    bottom: -1px;
+    left: -1px;
+    border-right: none;
+    border-top: none;
+  }
+
+  .corner-br {
+    bottom: -1px;
+    right: -1px;
+    border-left: none;
+    border-top: none;
+  }
+
+  /* Animated scan line */
+  .scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(217, 58, 58, 0.15) 50%,
+      transparent 100%
+    );
+    z-index: 2;
+    pointer-events: none;
+    animation: scan 4s linear infinite;
+    opacity: 0.7;
+  }
+
+  /* Bottom fade */
+  .portrait-fade {
+    position: absolute;
+    inset-x: 0;
+    bottom: 0;
+    height: 25%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    z-index: 1;
+  }
+
+  /* Animations */
+  @keyframes pulse-glow {
+    0%, 100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes scan {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(calc(100% + 100px));
+    }
+  }
+
+  /* Threat Level Indicator */
+  .threat-indicator {
+    width: min(280px, 70vw);
+    padding: 0.75rem 1rem;
+    text-align: center;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1px solid;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .threat-label {
+    font-size: 0.65rem;
+    opacity: 0.7;
+  }
+
+  .threat-level {
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  /* Threat level color variants */
+  .threat-critical {
+    border-color: rgba(217, 58, 58, 1);
+    color: rgba(217, 58, 58, 1);
+    box-shadow: 0 0 20px rgba(217, 58, 58, 0.4);
+    animation: pulse-threat 2s ease-in-out infinite;
+  }
+
+  .threat-high {
+    border-color: rgba(217, 58, 58, 0.8);
+    color: rgba(217, 58, 58, 0.9);
+    box-shadow: 0 0 15px rgba(217, 58, 58, 0.3);
+  }
+
+  .threat-moderate-high {
+    border-color: rgba(255, 100, 58, 0.8);
+    color: rgba(255, 120, 70, 0.95);
+    box-shadow: 0 0 12px rgba(255, 100, 58, 0.25);
+  }
+
+  .threat-moderate {
+    border-color: rgba(255, 165, 58, 0.7);
+    color: rgba(255, 180, 80, 0.9);
+    box-shadow: 0 0 10px rgba(255, 165, 58, 0.2);
+  }
+
+  .threat-low {
+    border-color: rgba(255, 220, 90, 0.6);
+    color: rgba(255, 230, 120, 0.85);
+    box-shadow: 0 0 8px rgba(255, 220, 90, 0.15);
+  }
+
+  @keyframes pulse-threat {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(217, 58, 58, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(217, 58, 58, 0.6);
+    }
+  }
+
+  /* Black panel: Contains all text content */
+  .dossier-article {
+    position: relative;
+    width: 100%;
+    max-width: 50rem;
+    padding: 2.5rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.65);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    overflow: hidden;
+  }
+
+  /* Imperial seal watermark */
+  .dossier-article::before {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    width: 400px;
+    height: 400px;
+    background-image: url('/ICSD/images/imperial-emblem.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 0;
+    animation: rotate-seal 120s linear infinite;
+  }
+
+  @keyframes rotate-seal {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  /* Ensure content appears above watermark */
+  .reference-id,
+  .dossier-header,
+  .transition-band,
+  .story-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Desktop: Portrait column left, black panel right */
+  @media (min-width: 1024px) {
+    .dossier-wrapper {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 3rem;
+      padding: 4rem 2rem;
+    }
+
+    .portrait-column {
+      width: 420px;
+      flex-shrink: 0;
+    }
+
+    .portrait-shell {
+      width: 100%;
+    }
+
+    .threat-indicator {
+      width: 100%;
+    }
+
+    .dossier-article {
+      flex: 1;
+      max-width: 50rem;
+    }
+  }
+
+  /* Databank Reference ID */
+  .reference-id {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: rgba(154, 160, 166, 0.7);
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(217, 58, 58, 0.2);
+    margin-bottom: 1rem;
+  }
+
+  .ref-label {
+    color: rgba(217, 58, 58, 0.8);
+    font-weight: 500;
+  }
+
+  .ref-code {
+    margin-left: 0.5rem;
+    color: rgba(154, 160, 166, 0.9);
+  }
+
+  /* HEADER: Title + Summary container (centered) */
+  .dossier-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .title-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.55);
+  }
+
+  .summary-box {
+    max-width: 36rem;
+    padding: 0 0.5rem;
+    text-align: center;
+  }
+
+  /* TRANSITION: Red laser accent band between header and content */
+  .transition-band {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 1rem 0;
+  }
+
+  .transition-band .glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: radial-gradient(ellipse at center, rgba(217, 58, 58, 0.5), transparent 70%);
+    opacity: 0.6;
+    filter: blur(24px);
+  }
+
+  .transition-band .line {
+    display: block;
+    height: 2px;
+    background: linear-gradient(to right, transparent 0%, rgba(217, 58, 58, 0.9) 50%, transparent 100%);
+    position: relative;
+    box-shadow: 0 0 8px rgba(217, 58, 58, 0.6);
+  }
+
+  .story-content {
+    max-width: 65ch;
+    margin: 0 auto;
+    padding-top: 1.75rem;
+    padding-bottom: 2rem;
+    line-height: 1.85;
+    color: rgba(229, 231, 235, 0.88);
+  }
+
+  .story-content :global(h2),
+  .story-content :global(h3) {
+    position: relative;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    font-family: 'Rajdhani', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    color: #ffffff;
+    padding-top: 1rem;
+  }
+
+  .story-content :global(h2::before),
+  .story-content :global(h3::before) {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(to right, rgba(217, 58, 58, 0.8), transparent);
+  }
+
+  .story-content :global(p + p) {
+    margin-top: 1.25rem;
+  }
+
+  .story-content :global(a) {
+    color: #d93a3a;
+    text-decoration: underline;
+  }
+
+  .story-content :global(p:first-of-type) {
+    font-size: 1.08rem;
+    color: rgba(255, 255, 255, 0.94);
+    letter-spacing: 0.015em;
+  }
+</style>

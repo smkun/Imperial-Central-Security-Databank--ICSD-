@@ -41,13 +41,7 @@ Make your player stories readable and searchable on the web. Use Astro, Tailwind
 
 ```yaml
 title: Bilar “Bill” Saruun
-slug: bilar-saruun
 character: Bilar "Bill" Saruun
-species: Zabrak
-affiliation: Independent
-era: Imperial
-tags: [padawan, survivor, yt-1300 crew]
-ship: YT-1300 (crew)
 lastUpdated: 2025-10-12
 portrait: /images/stories/bilar.jpg
 summary: Padawan survivor living under an alias; searching for Master Koras.
@@ -64,14 +58,13 @@ summary: Padawan survivor living under an alias; searching for Master Koras.
 
 * Story page:
 
-  * Title, meta row (species, tags, ship).
+  * Title with summary lead-in.
   * Sticky sidebar with in-page headings.
   * “Copy section link” button.
   * Reading width ~65ch. Large, legible font.
 * List page:
 
-  * Search box (title, character, tags).
-  * Filter chips: Era, Species, Tag.
+  * Search box (title, character).
   * Grid or compact list toggle.
 
 ## 7) Visual style
@@ -102,7 +95,6 @@ summary: Padawan survivor living under an alias; searching for Master Koras.
     /stories/*.mdx
   /components
     StoryCard.astro
-    StoryMeta.astro
     TOCClient.ts
     SearchClient.ts
   /layouts
@@ -121,7 +113,7 @@ astro.config.mjs
 ## 10) Search behavior
 
 * Fuse.js index built at runtime from a small JSON generated at build.
-* Fields: `title`, `character`, `tags`, `summary`.
+* Fields: `title`, `character`, `summary`.
 * Debounced input. Results update under 100 ms on 200+ items.
 
 ## 11) Accessibility
@@ -160,7 +152,7 @@ astro.config.mjs
 ## 16) Acceptance criteria (v1)
 
 * I can add a story MDX and see it on `/stories` and `/stories/{slug}`.
-* Search returns expected matches by title and tags.
+* Search returns expected matches by title and summary text.
 * Print view removes chrome and prints clean text and images.
 * Lighthouse: Performance ≥ 90, Accessibility ≥ 95.
 
@@ -198,13 +190,7 @@ astro.config.mjs
 ```mdx
 ---
 title: Bilar “Bill” Saruun
-slug: bilar-saruun
 character: Bilar "Bill" Saruun
-species: Zabrak
-affiliation: Independent
-era: Imperial
-tags: [padawan, survivor, yt-1300 crew]
-ship: YT-1300 (crew)
 lastUpdated: 2025-10-12
 portrait: /images/stories/bilar.jpg
 summary: Padawan survivor living under an alias; searching for Master Koras.

@@ -14,8 +14,8 @@ export default {
         },
       },
       fontFamily: {
-        body: ['Inter', 'sans-serif'],
-        label: ['Oswald', 'sans-serif'],
+        body: ['Exo 2', 'sans-serif'],
+        label: ['Rajdhani', 'sans-serif'],
         mono: ['Roboto Mono', 'monospace'],
       },
       maxWidth: {
