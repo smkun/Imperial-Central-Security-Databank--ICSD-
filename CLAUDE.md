@@ -281,16 +281,21 @@ If a task requires changes that could break existing functionality:
 - ✅ Configured Imperial theme colors: bg (#0A0A0A), panel (#161A1D), line (#23272A), alert (#D93A3A), mute (#9AA0A6)
 - ✅ Added skip-to-content link for accessibility
 - ✅ Included scan-line divider visual flourish
+- ✅ Documented SOURCE FILES location containing 8 story .docx files and 8 portrait .png files
+
+**Source Data Inventory:**
+- **Stories (8)**: Bilar Saruun, Cheedo, Dakk, F1X-3R, Kaa'Reth, Long Claw, Ragath, Tekli
+- **Portraits (8)**: BarabelMercenary.png, ChadraFanPilot.png, F1X-3R.png, HumanAcePilot.png, LongClaw.png, RhodianScoundral.png, VerpineOperative.png, ZabrakJedi.png
 
 **Blockers/Issues:**
 - None
 
 **Next session priorities:**
-1. Create 404 error page with Imperial theme
-2. Create image optimization script
-3. Configure build settings and test dev server
-4. Set up content collections with Zod schema
-5. Create first sample story MDX file
+1. Set up content collections with Zod schema
+2. Create image optimization script to process SOURCE FILES portraits
+3. Convert first sample story (Bilar Saruun) from .docx to MDX
+4. Test development server
+5. Create 404 error page with Imperial theme
 
 ---
 
@@ -318,8 +323,9 @@ npm run format
 ### File Paths Quick Reference
 
 - **Planning docs**: `PLANNING.md`, `TASKS.md`, `PRD.md`, `CLAUDE.md`
-- **Stories content**: `/src/content/stories/*.mdx`
-- **Story images**: `/public/images/stories/`
+- **Source data**: `SOURCE FILES/` - Contains original .docx stories and .png portraits
+- **Stories content**: `/src/content/stories/*.mdx` (to be created from SOURCE FILES)
+- **Story images**: `/public/images/stories/` (optimized from SOURCE FILES)
 - **Components**: `/src/components/`
 - **Layouts**: `/src/layouts/`
 - **Pages**: `/src/pages/`

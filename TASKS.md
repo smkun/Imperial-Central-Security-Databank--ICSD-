@@ -563,25 +563,31 @@
 
 ## Newly Discovered Tasks
 
-<!-- Add tasks discovered during implementation here -->
+- [ ] Create script to process SOURCE FILES portraits to /public/images/stories/
+  **Reason:** Need to optimize 8 existing .png portraits from SOURCE FILES folder (BarabelMercenary.png, ChadraFanPilot.png, F1X-3R.png, HumanAcePilot.png, LongClaw.png, RhodianScoundral.png, VerpineOperative.png, ZabrakJedi.png)
+  **Discovered during:** Session 2 - User informed that source data is in SOURCE FILES folder
+
+- [ ] Update task: Convert .docx files (not PDFs) from SOURCE FILES to MDX
+  **Reason:** Source files are .docx format, not PDFs as originally specified in PLANNING.md
+  **Discovered during:** Session 2 - SOURCE FILES inventory shows 8 .docx files (Bilar Saruun, Cheedo, Dakk, F1X-3R, Kaa'Reth, Long Claw, Ragath, Tekli)
 
 ---
 
 ## Next 5 Tasks to Run
 
-Based on the current project state (starting from scratch), here are the immediate next steps:
+Based on the current project state (11 tasks complete from Milestone 1), here are the immediate next steps:
 
-1. **Initialize Astro project with TypeScript template**
-   Run `npm create astro@latest` and select TypeScript strict mode
+1. **Create `/src/content/stories/` directory**
+   Set up content collections directory structure for MDX story files
 
-2. **Install Tailwind CSS dependencies**
-   Run `npx astro add tailwind` to integrate Tailwind with Astro
+2. **Define Zod schema for story frontmatter**
+   Create schema matching PRD spec with fields: title, slug, character, species, affiliation, era, tags, ship, portrait, summary
 
-3. **Configure Tailwind with custom Imperial color tokens**
-   Edit `tailwind.config.ts` to add custom color palette from PRD.md
+3. **Register stories collection in Astro config**
+   Configure content collections in astro.config.mjs with Zod schema
 
-4. **Install MDX integration for Astro**
-   Run `npx astro add mdx` to enable MDX content support
+4. **Create `/public/images/stories/` directory**
+   Set up directory for optimized portrait images
 
-5. **Install Fuse.js for search functionality**
-   Run `npm install fuse.js` to add search library dependency
+5. **Create script to process SOURCE FILES portraits**
+   Build image optimization script to convert .png files from SOURCE FILES to WebP format (600×800)
