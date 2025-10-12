@@ -299,6 +299,34 @@ If a task requires changes that could break existing functionality:
 
 ---
 
+### 2025-10-12 — Content Collections Setup (Session 3)
+**Tasks completed:** 5 (Milestone 2)
+**Key accomplishments:**
+- ✅ Created `/src/content/stories/` directory structure for MDX files
+- ✅ Defined Zod schema with all PRD frontmatter fields (title, slug, character, species, affiliation, era, tags, ship, lastUpdated, portrait, summary, homeworld, authorNotes, linkedStories)
+- ✅ Registered stories collection in `src/content/config.ts` with type-safe validation
+- ✅ Created `/public/images/stories/` directory for optimized portraits
+- ✅ Built `scripts/optimize-images.sh` for automated WebP conversion (600×800, 85% quality)
+
+**Technical Details:**
+- Content collections provide build-time validation and TypeScript types
+- Zod schema matches PRD specification exactly
+- Image script uses ImageMagick for PNG → WebP conversion
+- Kebab-case filename transformation for web-friendly URLs
+- Script includes progress indicators and file size comparisons
+
+**Blockers/Issues:**
+- None
+
+**Next session priorities:**
+1. Run optimize-images.sh to process 8 portraits from SOURCE FILES
+2. Convert first .docx story (Bilar Saruun) to MDX
+3. Create sample story to test content collection
+4. Test development server with real content
+5. Create StoryCard and StoryMeta components
+
+---
+
 ## Quick Reference
 
 ### Common Commands
