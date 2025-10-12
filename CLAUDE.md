@@ -327,6 +327,34 @@ If a task requires changes that could break existing functionality:
 
 ---
 
+### 2025-10-12 — Image Processing and Components (Session 4)
+**Tasks completed:** 4 (Milestone 1 & 2)
+**Key accomplishments:**
+- ✅ Created Node.js image optimization script using Sharp (scripts/optimize-images.js)
+- ✅ Processed all 8 portraits from SOURCE FILES with 94-95% size reduction
+- ✅ Built StoryCard.astro component with grid/compact modes and Imperial theme
+- ✅ Built StoryMeta.astro component for metadata display
+- ✅ Successfully tested development server (http://localhost:4321)
+
+**Technical Details:**
+- Sharp replaced ImageMagick for better portability
+- Generated WebP images: barabel-mercenary, chadra-fan-pilot, f1-x-3-r, human-ace-pilot, long-claw, rhodian-scoundral, verpine-operative, zabrak-jedi
+- StoryCard supports grid and compact view modes
+- Components follow Imperial color scheme and typography
+- Dev server confirmed working with clean build
+
+**Blockers/Issues:**
+- None - ready for content creation
+
+**Next session priorities:**
+1. Convert first .docx story (Bilar Saruun) to MDX format
+2. Create sample story file to test content collections
+3. Build home page with latest stories
+4. Create 404 error page
+5. Build story list page (/stories)
+
+---
+
 ## Quick Reference
 
 ### Common Commands
