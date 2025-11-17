@@ -12,6 +12,7 @@ const storiesCollection = defineCollection({
     homeworld: z.string().optional(),
     authorNotes: z.string().optional(),
     linkedStories: z.array(z.string()).optional(),
+    characterSheet: z.string().optional(),
   }),
 });
 
